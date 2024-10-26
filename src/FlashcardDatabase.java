@@ -7,10 +7,10 @@ public class FlashcardDatabase {
     String fileName;
 
     public FlashcardDatabase(String fileName) {
-        classes = null;
-        questionsByClass = null;
-        allQuestions = null;
         this.fileName = fileName;
+        readClasses();
+        readAllQuestions();
+        createQuestionsByClass();
     }
 
     public void readClasses() {
@@ -59,22 +59,63 @@ public class FlashcardDatabase {
                         for (int k = 0; k < questionsByClass[i].length; k++) {
                             tempQuestions[k] = questionsByClass[i][k];
                         } tempQuestions[tempQuestions.length - 1] = allQuestions[j];
+                        questionsByClass[i] = tempQuestions;
                     }
                 }
             }
         }
     }
 
+    public void addClass(String classType) {
+        String[] tempClasses = new String[classes.length + 1];
+        for (int i = 0; i < classes.length; i++) {
+            tempClasses[i] = classes[i];
+        } tempClasses[tempClasses.length - 1] = classType;
+        classes = tempClasses;
+    }
+
+    public String[] getclasses() {
+        return classes;
+    }
+
+    public void setClasses(String[] classes) {
+        this.classes = classes;
+    }
+
     public Question[] getAllQuestions() {
         return allQuestions;
+    }
+
+    public void setAllQuestions(Question[] allQuestions) {
+        this.allQuestions = allQuestions;
+    }
+
+    public Question[][] getQuestionsByClass() {
+        return questionsByClass;
+    }
+
+    public void setQuestionsByClass(Question[][] questionsByClass) {
+        this.questionsByClass = questionsByClass;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public static void main(String[] args) {
         FlashcardDatabase f = new FlashcardDatabase("data.txt");
         f.readClasses();
         f.readAllQuestions();
-        for (int i = 0; i < f.allQuestions.length; i++) {
-            System.out.println(f.allQuestions[i].toString());
+        f.createQuestionsByClass();
+        for (int i = 0; i < f.questionsByClass.length; i++) {
+            System.out.println("  ");
+            for (int j = 0; j < f.questionsByClass[i].length; j++) {
+                System.out.println(f.questionsByClass[i][j].toString());
+            }
         }
     }
 
