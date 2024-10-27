@@ -1,10 +1,10 @@
 public class Question {
-    private String question;
+    private String clue;
     private String answer;
     private String classType;
 
-    public Question(String question, String answer, String classType) {
-        this.question = question;
+    public Question(String clue, String answer, String classType) {
+        this.clue = clue;
         this.answer = answer;
         this.classType = classType;
     }
@@ -12,16 +12,16 @@ public class Question {
     public Question(String dataLine) {
         String[] dataComps = dataLine.split(",");
         this.classType = dataComps[0];
-        this.question = dataComps[1];
+        this.clue = dataComps[1];
         this.answer = dataComps[2];
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public void setClue(String clue) {
+        this.clue = clue;
     }
 
-    public String getQuestion() {
-        return question;
+    public String getClue() {
+        return clue;
     }
 
     public void setAnswer(String answer) {
@@ -41,10 +41,12 @@ public class Question {
     }
 
     public String toString() {
-        return String.format("%s,%s,%s", classType, question, answer);
+        return String.format("%s,%s,%s", classType, clue, answer);
     }
 
-
+    public boolean equals(Question q) {
+        return(clue.equals(q.clue) && answer.equals(q.answer) && classType.equals(q.classType));
+    }
 
 
 

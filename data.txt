@@ -1,4 +1,4 @@
-Calculus,Computer Science,Economics,Anthropology
+Calculus,Computer Science,Economics,Anthropology,Stats
 Calculus,What is the derivative of 2x?,2
 Economics,What is marginal benefit?,The benefit from buying one more of something
 Computer Science,What index do arrays start at?,0
@@ -6,3 +6,4 @@ Anthropology,What is culture?,Normal actions of a society
 Economics,Question,Answer
 Economics,Question2,Answer2
 Anthropology,Question 3,Answer 3
+Stats,What is the median?,Middle Value

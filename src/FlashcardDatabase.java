@@ -72,9 +72,63 @@ public class FlashcardDatabase {
             tempClasses[i] = classes[i];
         } tempClasses[tempClasses.length - 1] = classType;
         classes = tempClasses;
+        createQuestionsByClass();
     }
 
-    public String[] getclasses() {
+    public void removeClass(String classType) {
+        String[] tempClasses = new String[classes.length - 1];
+        for (int i = 0, j = 0; i < classes.length; i++) {
+            if (classes[i].equals(classType)) {
+                continue;
+            } else {
+                tempClasses[j] = classes[i];
+                j++;
+            }
+        } classes = tempClasses;
+        createQuestionsByClass();
+    }
+
+    public void addQuestion(Question newQuestion) {
+        Question[] tempQuestions = new Question[allQuestions.length + 1];
+        for (int i = 0; i < allQuestions.length; i++) {
+            tempQuestions[i] = allQuestions[i];
+        } tempQuestions[tempQuestions.length - 1] = newQuestion;
+        allQuestions = tempQuestions;
+        createQuestionsByClass();
+    }
+
+    public void removeQuestion(Question badQuestion) {
+        Question[] tempQuestions = new Question[allQuestions.length - 1];
+        for (int i = 0, j = 0; i < allQuestions.length; i++) {
+            if (allQuestions[i].equals(badQuestion)) {
+                continue;
+            } else {
+                tempQuestions[j] = allQuestions[i];
+                j++;
+            }
+        }
+        allQuestions = tempQuestions;
+        createQuestionsByClass();
+    }
+
+    public void writeFile() {
+        try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
+            for (int i = 0; i < classes.length; i++) {
+                pw.print(classes[i]);
+                if (i != classes.length - 1) {
+                    pw.print(",");
+                }
+            }
+            pw.print("\n");
+            for (Question q : allQuestions) {
+                pw.println(q.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String[] getClasses() {
         return classes;
     }
 
@@ -108,15 +162,10 @@ public class FlashcardDatabase {
 
     public static void main(String[] args) {
         FlashcardDatabase f = new FlashcardDatabase("data.txt");
-        f.readClasses();
-        f.readAllQuestions();
-        f.createQuestionsByClass();
-        for (int i = 0; i < f.questionsByClass.length; i++) {
-            System.out.println("  ");
-            for (int j = 0; j < f.questionsByClass[i].length; j++) {
-                System.out.println(f.questionsByClass[i][j].toString());
-            }
-        }
+        f.addClass("Stats");
+        f.addQuestion(new Question("Stats,What is the median?,Middle Value"));
+        f.writeFile();
     }
-
 }
+
+
